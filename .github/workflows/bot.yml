@@ -1,3 +1,6 @@
+concurrency:
+  group: bot
+  cancel-in-progress: true
 name: Bot 24h
 on:
   push:
