@@ -1,5 +1,4 @@
-
-[19/07/2026 02:28] Josuas: import os
+import os
 import json
 import datetime
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -89,8 +88,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Gastei
     if "gastei" in text:
         try:
-            partes = text.
-[19/07/2026 02:28] Josuas: replace("gastei","").strip().split()
+            partes = text.replace("gastei","").strip().split()
             valor = float(partes[0].replace("€",""))
             loja = " ".join(partes[1:]) if len(partes)>1 else "geral"
             data["gastos"].append({"valor": valor, "onde": loja, "data": datetime.datetime.now().strftime("%d/%m %H:%M")})
@@ -168,13 +166,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await mostrar_saldo(query)
     elif d == 'lista':
         msg = "🛒 **LISTA DE COMPRAS INTELIGENTE DONO - 50€ SEMANA**\n\n"
-        msg += "Pingo Doce/Lidl (Portimão):\n- Ovos 1.89€\n- Arroz 1.20€\n- Frango 3.
-[19/07/2026 02:28] Josuas: 50€\n- Pão 1€\n- Legumes 4€\n- Iogurte 2€\n- Azeite 3€\nTotal ~20€\n\n"
+        msg += "Pingo Doce/Lidl (Portimão):\n- Ovos 1.89€\n- Arroz 1.20€\n- Frango 3.50€\n- Pão 1€\n- Legumes 4€\n- Iogurte 2€\n- Azeite 3€\nTotal ~20€\n\n"
         msg += "NÃO COMPRA: refrigerante, bolacha recheada, delivery. Isso rouba teu pote liberdade."
         await query.edit_message_text(msg, parse_mode='Markdown')
     elif d == 'loja':
         msg = "🏪 **ONDE COMPRAR EM PORTIMÃO - MODO DONO**\n\n"
-        msg += "1. Lidl - mais barato pra base (arroz, ovo, frango)\n2. Pingo Doce - promoção 50% carne\n3. Continente - só se for com cupom\n\nRegra: Entra com lista, sai com lista. Sem lista = escravo do marketing."
+        msg += "1. **Lidl** - mais barato pra base (arroz, ovo, frango)\n2. **Pingo Doce** - promoção 50% carne\n3. **Continente** - só se for com cupom\n\nRegra: Entra com lista, sai com lista. Sem lista = escravo do marketing."
         await query.edit_message_text(msg)
     elif d == 'pasta':
         # PDF simples
@@ -202,5 +199,5 @@ def main():
     print("Bot Dono 24h rodando...")
     app.run_polling()
 
-if name == "__main__":
+if __name__ == "__main__":
     main()
