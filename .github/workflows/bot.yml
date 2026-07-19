@@ -1,22 +1,28 @@
-concurrency:
-  group: bot
-  cancel-in-progress: true
-name: Bot 24h
+name: run-bot 24h
+
 on:
-  push:
-  workflow_dispatch:
   schedule:
-    - cron: '0 */5 * * *'
+    - cron: '0 */5 * * *'  # roda sozinho a cada 5 horas
+  workflow_dispatch:       # te deixa clicar manualmente também
+
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install -r requirements.txt
-      - run: python bot_cloud.py
+          
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        
+      - name: Run bot for 5h50m
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: |
+          timeout 21000 python bot_cloud.py || true
+          # 21000 segundos = 5h50m, morre antes do limite de 6h do GitHub
